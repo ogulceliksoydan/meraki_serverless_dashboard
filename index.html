@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Main - Meraki Network Creator</title>
+</head>
+
+<body id="body" style="visibility:hidden">
+    <h4>Hello!</h4>
+    <button onclick="logOut();">Sign out</button>
+    <hr>
+
+    <form onsubmit="return false;">
+        <label for="netwname">Network name</label>
+        <input type="text" name="netwname" id="netname"><br><br>
+        <select id="anchor" name="template"></select>
+        <p>Enter Serial Numbers, one per line:</p>
+        <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
+        <button onclick="post();">Send</button>
+    </form>
+    <p id="message"></p>
+
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    -->
+    <script src="scripts/lib/jquery-3.3.1.min.js"></script>
+    <script src="scripts/lib/amazon-cognito-identity.min.js"></script>
+    <script src="scripts/script.js"></script>
+    <script>
+        $(function(){
+            checkLogin(false);
+        })           
+    </script>
+</body>
+
+</html>

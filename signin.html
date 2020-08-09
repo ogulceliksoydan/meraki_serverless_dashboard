@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sign In - Meraki Network Creator</title>
+</head>
+
+<body id="body" style="visibility:hidden">
+    <h4>Sign In</h4>
+    <form onsubmit="return false;">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Your username"><br><br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Your password"><br><br>
+        <button onclick="login();">Sign in</button>
+    </form>
+
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    -->
+    <script src="scripts/lib/jquery-3.3.1.min.js"></script>
+    <script src="scripts/lib/amazon-cognito-identity.min.js"></script>
+    <script src="scripts/script.js"></script>
+    <script>
+            $(function(){
+                checkLogin(true);
+            })
+    </script>
+</body>
+
+</html>
