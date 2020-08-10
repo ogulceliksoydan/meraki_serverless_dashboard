@@ -5,7 +5,7 @@
     <title>Sign In - Meraki Network Creator</title>
 </head>
 
-<body id="body" style="visibility:hidden">
+<body id="body" onload="checkLogin(true);" style="visibility:hidden">
     <h4>Sign In</h4>
     <form onsubmit="return false;">
         <label for="username">Username</label>
@@ -15,17 +15,8 @@
         <button onclick="login();">Sign in</button>
     </form>
 
-    <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    -->
-    <script src="scripts/lib/jquery-3.3.1.min.js"></script>
-    <script src="scripts/lib/amazon-cognito-identity.min.js"></script>
-    <script src="scripts/script.js"></script>
-    <script>
-            $(function(){
-                checkLogin(true);
-            })
-    </script>
+    <script src="amazon-cognito-identity.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

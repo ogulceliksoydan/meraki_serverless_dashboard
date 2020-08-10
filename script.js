@@ -25,12 +25,12 @@ function getTemplates(){
                 console.log("Dropdown items:", typeof data, data);
                 data.forEach(item => {
                     var para = document.createElement("option");
-                    var node = document.createTextNode(item);
+                    var node = document.createTextNode(item.id + ":" + item.name);
                     para.appendChild(node);
                     var element = document.getElementById("anchor");
                     element.appendChild(para);
                 });
-                $("#body").css({'visibility':'visible'});
+                document.getElementById("body").style = "visibility:visible";
             } else {
                 console.log("Token may have expired. Logging out");
                 logOut();
@@ -67,8 +67,8 @@ function createNetwork(postObj){
 }
 
 function login(){
-    var username = $('#username').val();
-    var password = $('#password').val();
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
     var authenticationData = {Username: username, Password: password};
 
     console.log("Username:",username , "Password:",password);
@@ -111,7 +111,7 @@ function checkLogin(redirectOnRec){
         if (!redirectOnRec) {
             window.location = './signin.html';
         } else {
-            $("#body").css({'visibility':'visible'});
+            document.getElementById("body").style = "visibility:visible";
         }
     }
 }
@@ -124,10 +124,10 @@ function logOut() {
 }
 
 function post(){
-    var netwname = $('#netname').val();
+    var netwname = document.getElementById("netname").value;
     var template = document.getElementById("anchor").value;
-    var serials = $('#serials').val();
-    var myobj = {"netname": netwname, "template": template, "serials": serials.replace(/ /g, "").split('\n')};
+    var serials = document.getElementById("serials").value;
+    var myobj = {"netname": netwname, "template": template.split(':')[0], "serials": serials.replace(/ /g, "").split('\n')};
     console.log("Created object:", myobj);
     createNetwork(myobj);
 }
