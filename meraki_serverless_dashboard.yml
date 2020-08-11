@@ -1,0 +1,590 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: ""
+Resources:
+    IAMManagedPolicy:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "${DynamoDBTable}-GetItem,PutItem"
+            Path: "/"
+            PolicyDocument: !Sub |
+                {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "VisualEditor0",
+                            "Effect": "Allow",
+                            "Action": [
+                                "dynamodb:PutItem",
+                                "dynamodb:GetItem"
+                            ],
+                            "Resource": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTable}"
+                        }
+                    ]
+                }
+
+    IAMRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/service-role/"
+            RoleName: "MyLambdaExecutionRole"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              - !Ref IAMManagedPolicy
+
+    S3Bucket:
+        Type: "AWS::S3::Bucket"
+        Properties:
+            BucketName: "ogul-s3-bucket-public"
+
+    S3BucketPolicy:
+        Type: "AWS::S3::BucketPolicy"
+        Properties:
+            Bucket: "ogul-s3-bucket"
+            PolicyDocument: 
+                Version: "2012-10-17"
+                Id: "Policy1415115909152"
+                Statement: 
+                  - 
+                    Sid: "Access-to-specific-VPCE-only"
+                    Effect: "Allow"
+                    Principal: "*"
+                    Action: "s3:GetObject"
+                    Resource: "arn:aws:s3:::ogul-s3-bucket/*"
+                    Condition: 
+                        StringEquals: 
+                            "aws:sourceVpce": "vpce-040f363fcdfe957ea"
+
+    CognitoUserPool:
+        Type: "AWS::Cognito::UserPool"
+        Properties:
+            UserPoolName: "testpool"
+            Policies: 
+                PasswordPolicy: 
+                    MinimumLength: 10
+                    RequireUppercase: true
+                    RequireLowercase: true
+                    RequireNumbers: true
+                    RequireSymbols: true
+                    TemporaryPasswordValidityDays: 7
+            LambdaConfig: {}
+            Schema: 
+              - 
+                Name: "sub"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: false
+                Required: true
+                StringAttributeConstraints: 
+                    MinLength: "1"
+                    MaxLength: "2048"
+              - 
+                Name: "name"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "given_name"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "family_name"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "middle_name"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "nickname"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "preferred_username"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "profile"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "picture"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "website"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "email"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "email_verified"
+                AttributeDataType: "Boolean"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+              - 
+                Name: "gender"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "birthdate"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "10"
+                    MaxLength: "10"
+              - 
+                Name: "zoneinfo"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "locale"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "phone_number"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "phone_number_verified"
+                AttributeDataType: "Boolean"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+              - 
+                Name: "address"
+                AttributeDataType: "String"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                StringAttributeConstraints: 
+                    MinLength: "0"
+                    MaxLength: "2048"
+              - 
+                Name: "updated_at"
+                AttributeDataType: "Number"
+                DeveloperOnlyAttribute: false
+                Mutable: true
+                Required: false
+                NumberAttributeConstraints: 
+                    MinValue: "0"
+            SmsVerificationMessage: "Your verification code is {####}. "
+            EmailVerificationMessage: "Your verification code is {####}. "
+            EmailVerificationSubject: "Your verification code"
+            SmsAuthenticationMessage: "Your authentication code is {####}. "
+            MfaConfiguration: "OFF"
+            EmailConfiguration: 
+                EmailSendingAccount: "COGNITO_DEFAULT"
+            AdminCreateUserConfig: 
+                AllowAdminCreateUserOnly: true
+                UnusedAccountValidityDays: 7
+                InviteMessageTemplate: 
+                    SMSMessage: "Your username is {username} and temporary password is {####}. "
+                    EmailMessage: "Your username is {username} and temporary password is {####}. "
+                    EmailSubject: "Your temporary password"
+            UserPoolTags: {}
+            AccountRecoverySetting: 
+                RecoveryMechanisms: 
+                  - 
+                    Priority: 1
+                    Name: "admin_only"
+            UsernameConfiguration: 
+                CaseSensitive: false
+            VerificationMessageTemplate: 
+                SmsMessage: "Your verification code is {####}. "
+                EmailMessage: "Your verification code is {####}. "
+                EmailSubject: "Your verification code"
+                DefaultEmailOption: "CONFIRM_WITH_CODE"
+
+    CognitoUserPoolClient:
+        Type: "AWS::Cognito::UserPoolClient"
+        Properties:
+            UserPoolId: !Ref CognitoUserPool
+            ClientName: "browser"
+            RefreshTokenValidity: 30
+            ReadAttributes: 
+              - "address"
+              - "birthdate"
+              - "email"
+              - "email_verified"
+              - "family_name"
+              - "gender"
+              - "given_name"
+              - "locale"
+              - "middle_name"
+              - "name"
+              - "nickname"
+              - "phone_number"
+              - "phone_number_verified"
+              - "picture"
+              - "preferred_username"
+              - "profile"
+              - "updated_at"
+              - "website"
+              - "zoneinfo"
+            WriteAttributes: 
+              - "address"
+              - "birthdate"
+              - "email"
+              - "family_name"
+              - "gender"
+              - "given_name"
+              - "locale"
+              - "middle_name"
+              - "name"
+              - "nickname"
+              - "phone_number"
+              - "picture"
+              - "preferred_username"
+              - "profile"
+              - "updated_at"
+              - "website"
+              - "zoneinfo"
+            ExplicitAuthFlows: 
+              - "ALLOW_ADMIN_USER_PASSWORD_AUTH"
+              - "ALLOW_CUSTOM_AUTH"
+              - "ALLOW_REFRESH_TOKEN_AUTH"
+              - "ALLOW_USER_SRP_AUTH"
+            PreventUserExistenceErrors: "ENABLED"
+
+    CognitoUserPoolUser:
+        Type: "AWS::Cognito::UserPoolUser"
+        Properties:
+            Username: "user1"
+            UserPoolId: !Ref CognitoUserPool
+            UserAttributes: 
+              - 
+                Name: "sub"
+                Value: "651a7a28-f82b-4896-a93a-9343b275a0d0"
+
+    ApiGatewayRestApi:
+        Type: "AWS::ApiGateway::RestApi"
+        Properties:
+            Name: "first-api"
+            ApiKeySourceType: "HEADER"
+            EndpointConfiguration: 
+                Types: 
+                  - "REGIONAL"
+
+    ApiGatewayStage:
+        Type: "AWS::ApiGateway::Stage"
+        Properties:
+            StageName: "dev"
+            DeploymentId: !Ref ApiGatewayDeployment
+            RestApiId: !Ref ApiGatewayRestApi
+            CacheClusterEnabled: false
+            TracingEnabled: false
+
+    ApiGatewayDeployment:
+        Type: "AWS::ApiGateway::Deployment"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+
+    ApiGatewayResource:
+        Type: "AWS::ApiGateway::Resource"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            PathPart: "first-api-test"
+            ParentId: !GetAtt ApiGatewayRestApi.RootResourceId
+
+    ApiGatewayMethod:
+        Type: "AWS::ApiGateway::Method"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            ResourceId: !Ref ApiGatewayResource
+            HttpMethod: "GET"
+            AuthorizationType: "COGNITO_USER_POOLS"
+            AuthorizerId: !Ref ApiGatewayAuthorizer
+            ApiKeyRequired: false
+            MethodResponses: 
+              - 
+                ResponseModels: 
+                    "application/json": !Ref ApiGatewayModel2
+                ResponseParameters: 
+                    "method.response.header.Access-Control-Allow-Origin": false
+                StatusCode: "200"
+            Integration: 
+                CacheNamespace: !Ref ApiGatewayResource
+                ContentHandling: "CONVERT_TO_TEXT"
+                IntegrationHttpMethod: "POST"
+                IntegrationResponses: 
+                  - 
+                    ResponseParameters: 
+                        "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    ResponseTemplates: {}
+                    StatusCode: "200"
+                PassthroughBehavior: "WHEN_NO_MATCH"
+                TimeoutInMillis: 29000
+                Type: "AWS"
+                Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${LambdaFunction2}/invocations"
+
+    ApiGatewayMethod2:
+        Type: "AWS::ApiGateway::Method"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            ResourceId: !Ref ApiGatewayResource
+            HttpMethod: "OPTIONS"
+            AuthorizationType: "NONE"
+            ApiKeyRequired: false
+            RequestParameters: {}
+            MethodResponses: 
+              - 
+                ResponseModels: 
+                    "application/json": !Ref ApiGatewayModel2
+                ResponseParameters: 
+                    "method.response.header.Access-Control-Allow-Headers": false
+                    "method.response.header.Access-Control-Allow-Methods": false
+                    "method.response.header.Access-Control-Allow-Origin": false
+                StatusCode: "200"
+            Integration: 
+                CacheNamespace: !Ref ApiGatewayResource
+                IntegrationResponses: 
+                  - 
+                    ResponseParameters: 
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                        "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS,POST'"
+                        "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    ResponseTemplates: {}
+                    StatusCode: "200"
+                PassthroughBehavior: "WHEN_NO_MATCH"
+                RequestTemplates: 
+                    "application/json": "{\"statusCode\": 200}"
+                TimeoutInMillis: 29000
+                Type: "MOCK"
+
+    ApiGatewayMethod3:
+        Type: "AWS::ApiGateway::Method"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            ResourceId: !Ref ApiGatewayResource
+            HttpMethod: "POST"
+            AuthorizationType: "COGNITO_USER_POOLS"
+            AuthorizerId: !Ref ApiGatewayAuthorizer
+            ApiKeyRequired: false
+            MethodResponses: 
+              - 
+                ResponseModels: 
+                    "application/json": !Ref ApiGatewayModel2
+                ResponseParameters: 
+                    "method.response.header.Access-Control-Allow-Origin": false
+                StatusCode: "200"
+            Integration: 
+                CacheNamespace: !Ref ApiGatewayResource
+                ContentHandling: "CONVERT_TO_TEXT"
+                IntegrationHttpMethod: "POST"
+                IntegrationResponses: 
+                  - 
+                    ResponseParameters: 
+                        "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    ResponseTemplates: {}
+                    StatusCode: "200"
+                PassthroughBehavior: "WHEN_NO_TEMPLATES"
+                RequestTemplates: 
+                    "application/json": |
+                        {
+                          "username": "$context.authorizer.claims["cognito:username"]",
+                          "netname": $input.json('$.netname'),
+                          "template": $input.json('$.template'),
+                          "serials": $input.json('$.serials')
+                        }
+                TimeoutInMillis: 29000
+                Type: "AWS"
+                Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${LambdaFunction}/invocations"
+
+    ApiGatewayAuthorizer:
+        Type: "AWS::ApiGateway::Authorizer"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            Name: "testpoolauth"
+            Type: "COGNITO_USER_POOLS"
+            ProviderARNs: 
+              - !GetAtt CognitoUserPool.Arn
+            AuthType: "cognito_user_pools"
+            IdentitySource: "method.request.header.Authorization"
+
+    ApiGatewayModel:
+        Type: "AWS::ApiGateway::Model"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            Name: "Error"
+            Description: "This is a default error schema model"
+            Schema: |
+                {
+                  "$schema" : "http://json-schema.org/draft-04/schema#",
+                  "title" : "Error Schema",
+                  "type" : "object",
+                  "properties" : {
+                    "message" : { "type" : "string" }
+                  }
+                }
+            ContentType: "application/json"
+
+    ApiGatewayModel2:
+        Type: "AWS::ApiGateway::Model"
+        Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            Name: "Empty"
+            Description: "This is a default empty schema model"
+            Schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "title" : "Empty Schema",
+                  "type" : "object"
+                }
+            ContentType: "application/json"
+
+    LambdaFunction:
+        Type: "AWS::Lambda::Function"
+        Properties:
+            Description: ""
+            Environment: 
+                Variables: 
+                    "MERAKI_DASHBOARD_API_KEY": ""
+            FunctionName: "returnEvent"
+            Handler: "lambda_function.lambda_handler"
+            Code: 
+                S3Bucket: "awslambda-eu-cent-1-tasks"
+                S3Key: !Sub "/snapshots/${AWS::AccountId}/returnEvent-d239507f-1ad5-417f-9fd0-f783c38e4bca"
+                S3ObjectVersion: "BfLKzvn3.lzm_Y0y02B_fa7t4ouQ9pi9"
+            MemorySize: 128
+            Role: !GetAtt IAMRole.Arn
+            Runtime: "python3.8"
+            Timeout: 15
+            TracingConfig: 
+                Mode: "PassThrough"
+
+    LambdaFunction2:
+        Type: "AWS::Lambda::Function"
+        Properties:
+            Description: ""
+            Environment: 
+                Variables: 
+                    "MERAKI_DASHBOARD_API_KEY": ""
+            FunctionName: "merakiGetTemplates"
+            Handler: "lambda_function.lambda_handler"
+            Code: 
+                S3Bucket: "awslambda-eu-cent-1-tasks"
+                S3Key: !Sub "/snapshots/${AWS::AccountId}/merakiGetTemplates-115f8e48-8c1e-4054-bd32-581e3d5f4284"
+                S3ObjectVersion: "bY_UMvurlXWbYF5ynNMyj2br3Y9UncRq"
+            MemorySize: 128
+            Role: !GetAtt IAMRole.Arn
+            Runtime: "python3.8"
+            Timeout: 3
+            TracingConfig: 
+                Mode: "PassThrough"
+
+    LambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt LambdaFunction.Arn
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayRestApi}/*/POST/first-api-test"
+
+    LambdaPermission2:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt LambdaFunction2.Arn
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayRestApi}/*/GET/first-api-test"
+
+    DynamoDBTable:
+        Type: "AWS::DynamoDB::Table"
+        Properties:
+            AttributeDefinitions: 
+              - 
+                AttributeName: "netname"
+                AttributeType: "S"
+              - 
+                AttributeName: "username"
+                AttributeType: "S"
+            TableName: "merakiNetworks"
+            KeySchema: 
+              - 
+                AttributeName: "username"
+                KeyType: "HASH"
+              - 
+                AttributeName: "netname"
+                KeyType: "RANGE"
+            ProvisionedThroughput: 
+                ReadCapacityUnits: 5
+                WriteCapacityUnits: 5
+
