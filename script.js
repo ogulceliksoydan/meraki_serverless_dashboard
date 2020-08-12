@@ -64,6 +64,7 @@ function createNetwork(postObj){
     
     //request.send(postObj);
     request.send(JSON.stringify(postObj));
+    document.getElementById("message").innerHTML = "Loading..."
 }
 
 function login(){
