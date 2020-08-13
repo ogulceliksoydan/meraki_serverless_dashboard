@@ -30,7 +30,8 @@ function getTemplates(){
                     var element = document.getElementById("anchor");
                     element.appendChild(para);
                 });
-                document.getElementById("loading").innerHTML = "Welcome!";
+                var msg = "Welcome " + localStorage.getItem('user');
+                document.getElementById("loading").innerHTML = msg;
                 document.getElementById("loading").style = "font-weight:bold";
                 document.getElementById("main").style = "visibility:visible";
             } else {
@@ -85,8 +86,8 @@ function login(){
         onSuccess: function (result) {
             //var accessToken = result.getAccessToken().getJwtToken();
             var idToken = result.getIdToken().getJwtToken();
-            //localStorage.setItem('token', idToken);
             localStorage.token = idToken;
+            localStorage.user = username
             
             window.location = './index.html';
             console.log("Authentication successful");
