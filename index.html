@@ -5,21 +5,24 @@
     <title>Main - Meraki Network Creator</title>
 </head>
 
-<body id="body" onload="checkLogin(false);" style="visibility:hidden">
-    <h4>Hello!</h4>
-    <button onclick="logOut();">Sign out</button>
-    <hr>
+<body onload="checkLogin(false);">
+    <p id="loading">Loading...</p>
 
-    <form onsubmit="return false;">
-        <label for="netwname">Network name:</label>
-        <input type="text" name="netwname" id="netname"><br><br>
-        <label for="template">Choose a template:</label>
-        <select id="anchor" name="template"></select><br><br>
-        <label for="serial">Enter Serial Numbers, one per line:</label><br><br>
-        <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
-        <button onclick="post();">Send</button>
-    </form>
-    <p id="message"></p>
+    <div id="main" style="visibility:hidden">
+        <button onclick="logOut();">Sign out</button><hr>
+
+        <form onsubmit="return false;">
+            <label for="netwname">Network name:</label>
+            <input type="text" name="netwname" id="netname"><br><br>
+            <label for="template">Choose a template:</label>
+            <select id="anchor" name="template"></select><br><br>
+            <label for="serial">Enter Serial Numbers, one per line:</label><br><br>
+            <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
+            <button onclick="post();">Send</button>
+        </form>
+        
+        <p id="message"></p>
+    </div>
 
     <script src="amazon-cognito-identity.min.js"></script>
     <script src="script.js"></script>

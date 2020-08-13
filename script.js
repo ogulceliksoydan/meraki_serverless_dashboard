@@ -30,7 +30,9 @@ function getTemplates(){
                     var element = document.getElementById("anchor");
                     element.appendChild(para);
                 });
-                document.getElementById("body").style = "visibility:visible";
+                document.getElementById("loading").innerHTML = "Welcome!";
+                document.getElementById("loading").style = "font-weight:bold";
+                document.getElementById("main").style = "visibility:visible";
             } else {
                 console.log("Token may have expired. Logging out");
                 logOut();
