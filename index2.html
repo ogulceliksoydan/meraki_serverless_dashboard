@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Meraki Network Creator</title>
+</head>
+
+<body onload="checkLogin();">
+    <div id="signin" style="visibility:hidden">
+        <p style="font-weight:bold">Sign In</p>
+    
+        <form onsubmit="return false;">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Your username"><br><br>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Your password"><br><br>
+            <button onclick="login();">Sign in</button>
+        </form>
+    </div>
+
+    <div id="main" style="visibility:hidden">
+        <p id="welcome"></p>
+        <button onclick="logOut();">Sign out</button><hr>
+
+        <form onsubmit="return false;">
+            <label for="netwname">Network name:</label>
+            <input type="text" name="netwname" id="netname"><br><br>
+            <label for="template">Choose a template:</label>
+            <select id="anchor" name="template"></select><br><br>
+            <label for="serial">Enter Serial Numbers, one per line:</label><br><br>
+            <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
+            <button onclick="post();">Send</button>
+        </form>
+        
+        <p id="message"></p>
+    </div>
+
+    <script src="amazon-cognito-identity.min.js"></script>
+    <script src="script2.js"></script>
+</body>
+
+</html>
