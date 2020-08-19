@@ -6,7 +6,7 @@
 </head>
 
 <body onload="checkLogin();">
-    <div id="signin" style="visibility:hidden">
+    <div id="signin" style="display:none">
         <p style="font-weight:bold">Sign In</p>
     
         <form onsubmit="return false;">
@@ -18,7 +18,9 @@
         </form>
     </div>
 
-    <div id="main" style="visibility:hidden">
+    <p id="loading" style="display:none">Loading...</p>
+
+    <div id="main" style="display:none">
         <p id="welcome"></p>
         <button onclick="logOut();">Sign out</button><hr>
 
@@ -29,7 +31,7 @@
             <select id="anchor" name="template"></select><br><br>
             <label for="serial">Enter Serial Numbers, one per line:</label><br><br>
             <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
-            <button onclick="post();">Send</button>
+            <button onclick="postObject();">Send</button>
         </form>
         
         <p id="message"></p>
