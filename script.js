@@ -92,7 +92,6 @@ function getTemplates(){
                 });
                 var msg = "Welcome " + localStorage.getItem('user');
                 document.getElementById("welcome").innerHTML = msg;
-                document.getElementById("welcome").style = "font-weight:bold";
                 document.getElementById("loading").style = "display:none";
                 document.getElementById("main").style = "display:block";
 
