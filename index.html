@@ -4,10 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <link rel="icon" href="favicon.png" type="image/png">
     <title>Meraki Network Creator</title>
 </head>
 
 <body onload="checkLogin();">
+    <img src="meraki.png" alt="Cisco Meraki">
+    
     <div id="signin" style="display:none">
         <h4>Sign In</h4>
     
@@ -32,7 +35,7 @@
             <label for="template">Choose a template:</label>
             <select id="anchor" name="template"></select><br><br>
             <label for="serial">Enter Serial Numbers, one per line:</label><br><br>
-            <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
+            <textarea name="serial" id="serials" rows="10" cols="36"></textarea><br><br>
             <button onclick="postObject();">Send</button>
         </form>
         
