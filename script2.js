@@ -113,7 +113,7 @@ function checkLogin(redirectOnRec){
         }
     } else {
         if (!redirectOnRec) {
-            window.location = './signin.html';
+            window.location = './signin2.html';
         } else {
             document.getElementById("body").style = "visibility:visible";
         }
@@ -123,7 +123,7 @@ function checkLogin(redirectOnRec){
 function logOut() {
     var cognitoUser = userPool.getCurrentUser();
     cognitoUser.signOut();
-    window.location = './signin.html';
+    window.location = './signin2.html';
     console.log("Logged out")
 }
 
