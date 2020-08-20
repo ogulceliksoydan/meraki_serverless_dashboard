@@ -2,13 +2,28 @@
 <html lang="en">
 
 <head>
-    <title>Main - Meraki Network Creator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Meraki Network Creator</title>
 </head>
 
-<body onload="checkLogin(false);">
-    <p id="loading">Loading...</p>
+<body onload="checkLogin();">
+    <div id="signin" style="display:none">
+        <p style="font-weight:bold">Sign In</p>
+    
+        <form onsubmit="return false;">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Your username"><br><br>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Your password"><br><br>
+            <button onclick="login();">Sign in</button>
+        </form>
+    </div>
 
-    <div id="main" style="visibility:hidden">
+    <p id="loading" style="display:none">Loading...</p>
+
+    <div id="main" style="display:none">
+        <p id="welcome"></p>
         <button onclick="logOut();">Sign out</button><hr>
 
         <form onsubmit="return false;">
@@ -18,7 +33,7 @@
             <select id="anchor" name="template"></select><br><br>
             <label for="serial">Enter Serial Numbers, one per line:</label><br><br>
             <textarea name="serial" id="serials" rows="10" cols="30"></textarea><br><br>
-            <button onclick="post();">Send</button>
+            <button onclick="postObject();">Send</button>
         </form>
         
         <p id="message"></p>
