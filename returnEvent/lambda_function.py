@@ -10,7 +10,7 @@ client = boto3.client('dynamodb')
 def lambda_handler(event, context):
     print(event)
     
-    if event["netname"] == "": return "Error: ['Enter a network name']"
+    if event["netname"] == "": return "Error: Enter a network name"
     else:
         response = client.get_item(
             TableName='merakiNetworks',
@@ -27,7 +27,7 @@ def lambda_handler(event, context):
         net_url = "https://api.meraki.com/api/v1/organizations/187186/networks"
         net_payload = json.dumps({"name": event["netname"], "productTypes": MX_MS_MR})
         created = requests.post(url=net_url, headers=headers, data=net_payload)
-        if created.status_code != 201: return "Error: "+str(json.loads(created.text)["errors"])
+        if created.status_code != 201: return "Error: "+json.loads(created.text)["errors"][0]
         net_id = json.loads(created.text)['id']
 
         #bind network_id to template_id:
@@ -49,6 +49,6 @@ def lambda_handler(event, context):
     add_url = "https://api.meraki.com/api/v1/networks/" + net_id + "/devices/claim"
     add_payload = json.dumps({"serials": event["serials"]})
     added = requests.post(url=add_url, headers=headers, data=add_payload)
-    if added.status_code != 200: return "User "+event["username"]+" created network "+event["netname"]+" and bound to template_id "+event["template"]+" but adding devices failed: "+str(json.loads(added.text)["errors"])
+    if added.status_code != 200: return "User "+event["username"]+" created network "+event["netname"]+" and bound to template_id "+event["template"]+" but adding devices failed: "+json.loads(added.text)["errors"][0]
     
     return "User "+event["username"]+" created network "+event["netname"]+", bound to template_id "+event["template"]+", and added serials "+str(event["serials"])
