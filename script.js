@@ -90,6 +90,7 @@ function getTemplates(){
                     var element = document.getElementById("anchor");
                     element.appendChild(para);
                 });
+                
                 var msg = "Welcome " + localStorage.getItem('user');
                 document.getElementById("welcome").innerHTML = msg;
                 document.getElementById("loading").style = "display:none";
@@ -126,6 +127,7 @@ function postObject(){
                 var data = JSON.parse(this.response);
                 console.log("Message:", typeof data, data);
 
+                document.getElementById("loading2").style = "display:none";
                 document.getElementById("message").innerHTML = this.response;
 
             } else {
@@ -137,5 +139,6 @@ function postObject(){
     
     //request.send(myobj);
     request.send(JSON.stringify(myobj));
-    document.getElementById("message").innerHTML = "Loading..."    
+    document.getElementById("message").innerHTML = "";
+    document.getElementById("loading2").style = "display:block";
 }
