@@ -468,7 +468,12 @@ Resources:
                         "method.response.header.Access-Control-Allow-Origin": "'*'"
                     ResponseTemplates: {}
                     StatusCode: "200"
-                PassthroughBehavior: "WHEN_NO_MATCH"
+                PassthroughBehavior: "WHEN_NO_TEMPLATES"
+                RequestTemplates: 
+                    "application/json": |
+                        {
+                            "username": "$context.authorizer.claims["cognito:username"]"
+                        }
                 TimeoutInMillis: 29000
                 Type: "AWS"
                 Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${LambdaFunction2}/invocations"

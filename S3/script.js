@@ -41,7 +41,6 @@ function login(){
             //var accessToken = result.getAccessToken().getJwtToken();
             var idToken = result.getIdToken().getJwtToken();
             localStorage.token = idToken;
-            localStorage.user = username
             
             document.getElementById("signin").style = "display:none";
             getTemplates();
@@ -82,7 +81,7 @@ function getTemplates(){
         if (this.readyState == 4) {
             if (this.status == 200) {
                 console.log("Complete data:", typeof this, this);
-                var data = JSON.parse(this.response);
+                var data = JSON.parse(this.response).templates;
                 console.log("Items:", typeof data, data);
 
                 data.forEach(item => {
@@ -96,7 +95,7 @@ function getTemplates(){
                     templates[item.name] = item.id
                 });
                 
-                var msg = "Welcome " + localStorage.getItem('user');
+                var msg = "Welcome " + JSON.parse(this.response).username;
                 document.getElementById("welcome").innerHTML = msg;
                 document.getElementById("loading").style = "display:none";
                 document.getElementById("main").style = "display:block";
