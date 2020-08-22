@@ -12,7 +12,7 @@ templates = {}
 
 //Functions:
 
-function checkLogin(){
+function checkLogin() {
     var cognitoUser = userPool.getCurrentUser();
 
     if (cognitoUser == null) {
@@ -22,7 +22,7 @@ function checkLogin(){
     }
 }
 
-function login(){
+function login() {
     document.getElementById("loading").style = "display:block";
     
     var username = document.getElementById("username").value;
@@ -37,7 +37,7 @@ function login(){
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
     cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (result) {
+        onSuccess: function(result) {
             //var accessToken = result.getAccessToken().getJwtToken();
             var idToken = result.getIdToken().getJwtToken();
             localStorage.token = idToken;
@@ -68,7 +68,7 @@ function logOut() {
     console.log("Logged out")
 }
 
-function getTemplates(){
+function getTemplates() {
     document.getElementById("loading").style = "display:block";
 
     var request = new XMLHttpRequest();
@@ -110,7 +110,7 @@ function getTemplates(){
     request.send();
 }
 
-function postObject(){
+function postObject() {
     var netwname = document.getElementById("netname").value;
     var template_id = templates[document.getElementById("anchor").value]
     var serials = document.getElementById("serials").value;
@@ -124,7 +124,7 @@ function postObject(){
     //request.setRequestHeader('Authorization', "wrongtoken"); // for token expiration test
     request.setRequestHeader('Content-Type', 'application/json');
     
-    request.onreadystatechange = function () {
+    request.onreadystatechange = function() {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 console.log("Complete data:", typeof this, this)
