@@ -8,6 +8,8 @@ var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 var url = "https://5sxi6aqju5.execute-api.eu-central-1.amazonaws.com/dev/first-api-test";
 
+templates = {}
+
 //Functions:
 
 function checkLogin(){
@@ -81,14 +83,17 @@ function getTemplates(){
             if (this.status == 200) {
                 console.log("Complete data:", typeof this, this);
                 var data = JSON.parse(this.response);
-                console.log("Dropdown items:", typeof data, data);
+                console.log("Items:", typeof data, data);
 
                 data.forEach(item => {
                     var para = document.createElement("option");
-                    var node = document.createTextNode(item.id + ":" + item.name);
+                    var node = document.createElement("p");
+                    node.innerHTML = item.name;
                     para.appendChild(node);
                     var element = document.getElementById("anchor");
                     element.appendChild(para);
+
+                    templates[item.name] = item.id
                 });
                 
                 var msg = "Welcome " + localStorage.getItem('user');
@@ -108,9 +113,9 @@ function getTemplates(){
 
 function postObject(){
     var netwname = document.getElementById("netname").value;
-    var template = document.getElementById("anchor").value;
+    var template_id = templates[document.getElementById("anchor").value]
     var serials = document.getElementById("serials").value;
-    var myobj = {"netname": netwname, "template": template.split(':')[0], "serials": serials.replace(/ /g, "").split('\n')};
+    var myobj = {"netname": netwname, "template_id": template_id, "serials": serials.replace(/ /g, "").split('\n')};
 
     console.log("Created object:", myobj);
     

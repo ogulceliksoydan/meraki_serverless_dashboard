@@ -32,7 +32,7 @@ def lambda_handler(event, context):
 
         #bind network_id to template_id:
         bind_url = "https://api.meraki.com/api/v1/networks/" + net_id + "/bind"
-        bind_payload = json.dumps({"configTemplateId": event["template"], "autoBind": False})
+        bind_payload = json.dumps({"configTemplateId": event["template_id"], "autoBind": False})
         requests.post(url=bind_url, headers=headers, data=bind_payload)
 
         #add network_name and network_id to dynamodb:
@@ -49,6 +49,6 @@ def lambda_handler(event, context):
     add_url = "https://api.meraki.com/api/v1/networks/" + net_id + "/devices/claim"
     add_payload = json.dumps({"serials": event["serials"]})
     added = requests.post(url=add_url, headers=headers, data=add_payload)
-    if added.status_code != 200: return "User "+event["username"]+" created network "+event["netname"]+" and bound to template_id "+event["template"]+" but adding devices failed: "+json.loads(added.text)["errors"][0]
+    if added.status_code != 200: return "User "+event["username"]+" created network "+event["netname"]+" but adding devices failed: "+json.loads(added.text)["errors"][0]
     
-    return "User "+event["username"]+" created network "+event["netname"]+", bound to template_id "+event["template"]+", and added serials "+str(event["serials"])
+    return "User "+event["username"]+" created network "+event["netname"]+" and added devices "+str(event["serials"])

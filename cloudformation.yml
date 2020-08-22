@@ -539,7 +539,7 @@ Resources:
                         {
                           "username": "$context.authorizer.claims["cognito:username"]",
                           "netname": $input.json('$.netname'),
-                          "template": $input.json('$.template'),
+                          "template_id": $input.json('$.template_id'),
                           "serials": $input.json('$.serials')
                         }
                 TimeoutInMillis: 29000
