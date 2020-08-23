@@ -3,7 +3,7 @@
 var userPoolId = 'eu-central-1_L0u4b6nRF';
 var clientId = '523eg0kdj10oo75juflc3hpvi5';
 
-var poolData = {UserPoolId : userPoolId, ClientId : clientId};
+var poolData = {UserPoolId: userPoolId, ClientId: clientId};
 var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 var url = "https://5sxi6aqju5.execute-api.eu-central-1.amazonaws.com/dev/first-api-test";
@@ -33,7 +33,7 @@ function login() {
 
     var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
 
-    var userData = {Username : username, Pool : userPool};
+    var userData = {Username: username, Pool: userPool};
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
     cognitoUser.authenticateUser(authenticationDetails, {
@@ -63,7 +63,7 @@ function logOut() {
     var cognitoUser = userPool.getCurrentUser();
     cognitoUser.signOut();
 
-    window.location = './index.html';
+    window.location = 'index.html';
     
     console.log("Logged out")
 }
@@ -89,8 +89,7 @@ function getTemplates() {
                     var node = document.createElement("p");
                     node.innerHTML = item.name;
                     para.appendChild(node);
-                    var element = document.getElementById("anchor");
-                    element.appendChild(para);
+                    document.getElementById("anchor").appendChild(para);
 
                     templates[item.name] = item.id
                 });
