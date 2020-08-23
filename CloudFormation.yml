@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Metadata:
   Generator: "former2"
-Description: ""
+Description: "After deploying this template: 1- Upload your HTML, JS, and image files to S3 and make them public. 2- Create and activate users in Cognito. 3- Upload the zip files of your code to Lambda"
 Parameters: 
   MerakiAPIkey: 
     Type: String
