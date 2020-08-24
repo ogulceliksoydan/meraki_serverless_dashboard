@@ -21,6 +21,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/user-guide/set-object-permissions.ht
 You can then use AWS CLI to change the temporary password to a new one to activate the user:
 
   - Note: To install and configure the AWS CLI:
+  
 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
 
