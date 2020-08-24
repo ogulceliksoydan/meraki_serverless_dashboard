@@ -1,14 +1,14 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Metadata:
   Generator: "former2"
-Description: "After deploying this template: 1- Upload your HTML, JS, and image files to S3 and make them public. 2- Create and activate users in Cognito. 3- Upload the zip files of your code to Lambda"
+Description: "After deploying this template: Upload the frontend files to S3 and make them publicly readable, Create and activate users in Cognito, Upload the function.zip files to Lambda"
 Parameters: 
   MerakiAPIkey: 
     Type: String
     Description: Enter your Meraki API key
   S3BucketName:
     Type: String
-    Description: Enter your Public S3 bucket name
+    Description: Enter your Public S3 bucket name. It must contain only lowercase letters, numbers, periods (.), and dashes (-)
 Resources:
   IAMManagedPolicy:
     Type: "AWS::IAM::ManagedPolicy"
