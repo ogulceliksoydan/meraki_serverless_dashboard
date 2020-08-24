@@ -21,11 +21,15 @@ https://docs.aws.amazon.com/AmazonS3/latest/user-guide/set-object-permissions.ht
 You can then use AWS CLI to change the temporary password to a new one to activate the user:
 
 ```bash
-aws cognito-idp admin-initiate-auth --user-pool-id Pool_id --client-id App_client_id --auth-flow ADMIN_NO_SRP_AUTH ^
+aws cognito-idp admin-initiate-auth --user-pool-id Pool_id ^
+--client-id App_client_id --auth-flow ADMIN_NO_SRP_AUTH ^
 --auth-parameters USERNAME=user_name,PASSWORD=initial_password
 
-aws cognito-idp admin-respond-to-auth-challenge --user-pool-id Pool_id --client-id client_id --challenge-name NEW_PASSWORD_REQUIRED ^
---challenge-responses NEW_PASSWORD=new_password,USERNAME=user_name --session session_string_from_the_previous_command
+aws cognito-idp admin-respond-to-auth-challenge ^
+--user-pool-id Pool_id --client-id client_id ^
+--challenge-name NEW_PASSWORD_REQUIRED ^
+--challenge-responses NEW_PASSWORD=new_password,USERNAME=user_name ^
+--session session_string_from_the_previous_command
 ```
 
 To install and configure the AWS CLI:
