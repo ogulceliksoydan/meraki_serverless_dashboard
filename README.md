@@ -20,6 +20,10 @@ https://docs.aws.amazon.com/AmazonS3/latest/user-guide/set-object-permissions.ht
 - Create and activate users in Cognito. In this configuration you can create a user with just a username and a temporary password.
 You can then use AWS CLI to change the temporary password to a new one to activate the user:
 
+  - Note: To install and configure the AWS CLI:
+https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
+
 ```bash
 aws cognito-idp admin-initiate-auth --user-pool-id Pool_id ^
 --client-id App_client_id --auth-flow ADMIN_NO_SRP_AUTH ^
@@ -31,9 +35,6 @@ aws cognito-idp admin-respond-to-auth-challenge --user-pool-id Pool_id ^
 --session session_string_from_the_previous_command
 ```
 
-  - To install and configure the AWS CLI:
 
-https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
 
 - Upload the function.zip files to Lambda
