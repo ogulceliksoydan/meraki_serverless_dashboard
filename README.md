@@ -17,7 +17,7 @@ You can deploy the CloudFormation template to create the infrastructure used for
 - Upload the frontend files to S3 and make them publicly readable
 https://docs.aws.amazon.com/AmazonS3/latest/user-guide/set-object-permissions.html
 
-- Create and activate users in Cognito. In this configuration you can create a user with just a username and a temporary password.
+- Create and activate users in Cognito. In this configuration, you can create a user with just a username and a temporary password.
 You can then use AWS CLI to change the temporary password to a new one to activate the user:
 
 ```bash
