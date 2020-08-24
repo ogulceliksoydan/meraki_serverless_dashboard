@@ -5,7 +5,7 @@ Description: "After deploying this template: Upload the frontend files to S3 and
 Parameters: 
   MerakiAPIkey: 
     Type: String
-    Description: Enter your Meraki API key
+    Description: Enter your Meraki API key.
   S3BucketName:
     Type: String
     Description: Enter your Public S3 bucket name. It must contain only lowercase letters, numbers, periods (.), and dashes (-)
