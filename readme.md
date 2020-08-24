@@ -27,6 +27,7 @@ aws cognito-idp admin-respond-to-auth-challenge --user-pool-id Pool_id --client-
 --challenge-responses NEW_PASSWORD=new_password,USERNAME=user_name --session session_string_from_the_previous_command
 
 To install and configure the AWS CLI:
+
 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
 
